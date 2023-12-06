@@ -22,7 +22,10 @@ app.use(
 // cookies
 
 app.get('/set-cookies', (req, res) => {
-  res.cookie('test', 'myCookieId1234', { maxAge: 60 * 60 * 1000 });
+  res.cookie('test', 'myCookieId1234', {
+    maxAge: 60 * 60 * 1000,
+    httpOnly: true,
+  });
   res.send('my cookie has been send');
 });
 app.get('/get-cookies', (req, res) => {
@@ -49,6 +52,17 @@ app.get('get-session', (req, res) => {
     res.send(`session is not valid`);
   }
 });
+
+app.get('clear-session', (req, res) => {
+  req.destroy(err) => {
+    if(err) {
+      console.error(err);
+    } else {
+      res.send('Session destroy');
+    }
+
+  } 
+}),
 
 app.listen(PORT, () => {
   console.log(`Server is running to port ${PORT}`);
